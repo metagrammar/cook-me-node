@@ -20,7 +20,16 @@ app.use(bodyParser.json());
 // get all recipes on '/'
 app.get('/', (req, res) => {
     pool
-        .query('SELECT * FROM recpies')
+        .query('SELECT * FROM recipes')
+        .then(data => res.json(data.rows))
+        .catch(err => console.log(err.message))
+})
+
+// get all recipes on '/step/:id'
+app.get('/step/:id', (req, res) => {
+   let { id } = req.params
+    pool
+        .query(`SELECT * FROM step WHERE recipe_id=${id}`)
         .then(data => res.json(data.rows))
         .catch(err => console.log(err.message))
 })
