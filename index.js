@@ -3,12 +3,16 @@ const app = express()
 const morgan = require('morgan')
 const pool = require('./database/index')
 const bodyParser = require('body-parser')
+var cors = require('cors')
 
 const port = process.env.PORT
 
 // MIDDLEWEAR
 // Morgan - Write log line on request 'tiny' shows VERB, status code, time in ms
 app.use(morgan('tiny'))
+
+// Cors middlewear
+app.use(cors())
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
