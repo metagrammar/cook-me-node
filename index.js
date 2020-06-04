@@ -30,9 +30,21 @@ app.get('/', (req, res) => {
 })
 
 // get filter results on '/filter/filter&filter&filter'
-app.get('/filter/', (req, res) => {
-    const { filter } = req.body
-    console.log(filter)
+app.post('/filter/', (req, res) => {
+    let filterquery = 
+    `SELECT recipe_id FROM recipes_categories
+    WHERE category_id= ${Object.values(req.body)[0]}`
+  for(let i=1;i<Object.values(req.body).length;i++){
+    filterquery+=` AND recipe_id IN (SELECT recipe_id FROM recipes_categories WHERE category_id=${Object.values(req.body)[i]})`
+    }
+    // console.log(filterquery)
+    pool
+        .query(filterquery)
+        .then(data => res.json(data.rows))
+        .catch(err => console.log(err.message))
+
+    // const { filter } = req.body
+    // console.log(req.body)
 })
 
 // get all recipes on '/step/:id'
