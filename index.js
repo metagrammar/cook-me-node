@@ -31,9 +31,18 @@ app.get('/', (req, res) => {
 
 // get all recipes on '/step/:id'
 app.get('/step/:id', (req, res) => {
-   let { id } = req.params
+    let { id } = req.params
+     pool
+         .query(`SELECT * FROM step WHERE recipe_id=${id}`)
+         .then(data => res.json(data.rows))
+         .catch(err => console.log(err.message))
+ })
+
+// get all recipes on '/step/:id'
+app.get('/recipe/:recipe_slug', (req, res) => {
+   let { recipe_slug } = req.params
     pool
-        .query(`SELECT * FROM step WHERE recipe_id=${id}`)
+        .query(`SELECT * FROM recipes WHERE recipe_slug='${recipe_slug}'`)
         .then(data => res.json(data.rows))
         .catch(err => console.log(err.message))
 })
