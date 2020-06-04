@@ -58,7 +58,21 @@ app.get('/cat', (req, res) => {
 // get all main categories on '/cat_main'
 app.get('/cat_main', (req, res) => {
     pool
-        .query('SELECT * from main_categories')
+        .query('SELECT * FROM main_categories')
+        .then(data => res.json(data.rows))
+        .catch(err => console.log(err.message))
+})
+
+// get search results on '/search/searchquery'
+app.get('/search/:searchquery', (req, res) => {
+    const { searchquery } = req.params
+    pool
+        .query(`SELECT * 
+            FROM recipes 
+            WHERE LOWER(recipe_title) 
+            LIKE LOWER('%${searchquery}%')
+            OR LOWER(recipe_description) 
+            LIKE LOWER('%${searchquery}%')`)
         .then(data => res.json(data.rows))
         .catch(err => console.log(err.message))
 })
