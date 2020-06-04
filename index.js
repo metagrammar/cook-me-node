@@ -38,7 +38,7 @@ app.get('/step/:id', (req, res) => {
          .catch(err => console.log(err.message))
  })
 
-// get all recipes on '/step/:id'
+// get recipe on '/recipe/:recipe_slug'
 app.get('/recipe/:recipe_slug', (req, res) => {
    let { recipe_slug } = req.params
     pool
