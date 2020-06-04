@@ -29,6 +29,12 @@ app.get('/', (req, res) => {
         .catch(err => console.log(err.message))
 })
 
+// get filter results on '/filter/filter&filter&filter'
+app.get('/filter/', (req, res) => {
+    const { filter } = req.body
+    console.log(filter)
+})
+
 // get all recipes on '/step/:id'
 app.get('/step/:id', (req, res) => {
     let { id } = req.params
