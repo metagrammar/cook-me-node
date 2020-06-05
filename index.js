@@ -82,6 +82,18 @@ app.get('/cat_main', (req, res) => {
         .catch(err => console.log(err.message))
 })
 
+// get category titles on '/cat/title'
+app.post('/cat/title', (req, res) => {
+    let catTitle = 
+    `SELECT category_title FROM categories
+    WHERE category_id IN ( ${Object.values(req.body).join()}`
+
+    pool
+        .query(catTitle)
+        .then(data => res.json(data.rows))
+        .catch(err => console.log(err.message))
+})
+
 // get search results on '/search/searchquery'
 app.get('/search/:searchquery', (req, res) => {
     const { searchquery } = req.params
