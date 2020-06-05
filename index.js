@@ -86,7 +86,7 @@ app.get('/cat_main', (req, res) => {
 app.post('/cat/title', (req, res) => {
     let catTitle = 
     `SELECT category_title FROM categories
-    WHERE category_id IN ( ${Object.values(req.body).join()}`
+    WHERE category_id IN (${Object.values(req.body).join()})`
 
     pool
         .query(catTitle)
