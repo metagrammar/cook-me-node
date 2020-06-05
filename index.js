@@ -32,10 +32,11 @@ app.get('/', (req, res) => {
 // get filter results on '/filter/filter&filter&filter'
 app.post('/filter/', (req, res) => {
     let filterquery = 
-    `SELECT recipe_id FROM recipes_categories
+    `SELECT * FROM recipes
+    Join recipes_categories rc ON rc.recipe_id = recipes.recipe_id
     WHERE category_id= ${Object.values(req.body)[0]}`
   for(let i=1;i<Object.values(req.body).length;i++){
-    filterquery+=` AND recipe_id IN (SELECT recipe_id FROM recipes_categories WHERE category_id=${Object.values(req.body)[i]})`
+    filterquery+=` AND rc.recipe_id IN (SELECT recipe_id FROM recipes_categories WHERE category_id=${Object.values(req.body)[i]})`
     }
     // console.log(filterquery)
     pool
